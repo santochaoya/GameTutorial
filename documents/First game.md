@@ -2,6 +2,8 @@ This document is using the turtle to create a pong game.
 
 
 
+# Main Game
+
 ## Preparing
 
 ```python
@@ -12,7 +14,7 @@ This is a basic graphics module used to create this game.
 
 
 
-### Create a window
+## Create a window
 
 ```python
 wn = turtle.Screen()
@@ -28,7 +30,7 @@ wn.tracer(0)
 
 
 
-### Create a main game loop
+## Create a main game loop
 
 The main game loop contains the entire process of the game. Every game will have a main game loop.
 
@@ -54,7 +56,7 @@ paddle_a = turtle.Turtle()
 
 
 
-#### 2. Setup the paddle
+### 2. Setup the paddle
 
 **Initialize settings**
 
@@ -106,7 +108,7 @@ paddle_a.speed(0)
 
 
 
-#### 3. Set another pandle
+### 3. Set another pandle
 
 It is all the same settings as paddle A except for the starting coordinate.
 
@@ -116,7 +118,7 @@ paddle_b.goto(350, 0)
 
 
 
-#### 4. Set the ball
+### 4. Set the ball
 
 All the same settings as paddle A. Except for starting coordinate and the stretch shape
 
@@ -127,25 +129,35 @@ ball.shapesize(stretch_width=1, stretch=1)
 
 
 
-### Functions to paddles and balls
+## Functions to paddles and balls
 
 After creating all the components for the game, we make some functions for them
 
-#### 1. Move paddles
+### 1. Move paddles
 
 ```python
 def paddle_a_up():
   	"""
-  	add 20 pixels to the y coordinate when the function calls.
+  	Add 20 pixels to the y coordinate when the function calls.
   	"""
     
     y = paddle_a.ycor() 
     y += 20 # add 20 pixel to y
     paddle_a.sety(y) # set new y to paddle a
     
+def paddle_a_down():
+  	"""
+  	Minus 20 pixels to the y coordinate when the function calls.
+  	"""
+    
+    y = paddle_a.ycor() 
+    y -= 20 # add 20 pixel to y
+    paddle_a.sety(y) # set new y to paddle a
+    
 # keyboard binding
 wn.listen()
 wn.onkeypress(paddle_a_up, 'w') 
+wn.onkeypress(paddle_a_down, 's') 
 ```
 
 * ```ycor()```  build in function, get the **current y coordinate**.
@@ -161,7 +173,7 @@ Replace bind key to **Up** and **Down** to the paddle B.
 
 
 
-#### 2. Move the ball and bounce up
+### 2. Move the ball and bounce up
 
 Next, let's get the ball move and bounce up from paddle and border. The ball will move from both x and y coordinate
 
@@ -195,15 +207,16 @@ while True:
    	if bar.ycor() < -290:
       	ball.sety(-290)
         ball.dy *= -1
-        
-    # left border
-    if baall.xcor() < -390:
-        ball.setx(-390)
+    
+    # if out of the left or right border, the ball will go back to the center and restart the game
+    # Left border
+    if ball.xcor() <= -390: 
+        ball.goto(0, 0)
         ball.dx *= -1
-        
-    # right border
-    if ball.xcor() > 390:
-        ball.setx(390)
+    
+    # Right border
+    if ball.xcor() >= 390:
+        ball.goto(0, 0)
         ball.dx *= -1
       
 ```
@@ -212,5 +225,22 @@ NOTE: KEEP USING 4 SPACES OR A TAB CONSISTENTLY, OR IT WILL RAISE AN ERROR.
 
 
 
+### 3. Paddle and ball collisions
 
+```python
+# Paddle and ball collisions
+# Left paddle
+if ball.xcor() == -330 and ((paddle_a.ycor() - 50) <= ball.ycor() <= (paddle_a.ycor() + 50)):
+ball.dx *= -1
+
+# Right paddle
+if ball.xcor() == 330 and ((paddle_b.ycor() - 50) <= ball.ycor() <= (paddle_b.ycor() + 50)):
+ball.dx *= -1
+```
+
+
+
+# Score System
+
+## 
 

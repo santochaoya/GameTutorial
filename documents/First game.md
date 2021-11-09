@@ -242,5 +242,71 @@ ball.dx *= -1
 
 # Score System
 
-## 
+## A pen to disiplay the score
+
+Assign a object ```pen``` to turtle object, hide the turtle object then write the score on the top of the board.
+
+```python
+pen = turtle.Turtle()
+pen.speed(0)
+pen.color('white')
+pen.penup() # disable to draw a line
+pen.hideturtle()
+pen.goto(0, 260)
+pen.write('Player A: 0 Player B: 0', align='center', font=('Courier', 24, 'normal'))
+```
+
+
+
+## Score system
+
+Someone will get a score when the opposite player failed to catch the ball. That means when the x coordinate is greater or less than the paddle, add 1 to the opposite player, clear the screen then rewrite the score,  and bind it to the border checking.
+
+```python
+# Left border
+if ball.xcor() <= -390: 
+  ball.goto(0, 0)
+  ball.dx *= -1
+  score_b += 1
+  pen.write('Player A: {} Player B: {}'.format(score_a, score_b), align='center', font=('Courier', 24, 'normal'))
+
+# Right border
+if ball.xcor() >= 390:
+    ball.goto(0, 0)
+    ball.dx *= -1
+    score_a += 1
+    pen.write('Player A: {} Player B: {}'.format(score_a, score_b), align='center', font=('Courier', 24, 'normal'))
+```
+
+
+
+# Sound system
+
+> When we need to and a sound file, for example, a .wav file, we must keep it in the same folder with the main game script.
+
+## Get a sound file
+
+In different operating system, the file a sound stored will be different. 
+
+* Mac
+
+  ```python
+  import os
+  
+  os.system('apflay bounce.wav$')
+  ```
+
+  * where the ```$``` indicate the end of the sound.
+
+* Lnuix
+
+  ```python
+  import os
+  
+  os.system('aflay bounce.wav$')
+  ```
+
+  
+
+
 

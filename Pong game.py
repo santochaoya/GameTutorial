@@ -80,6 +80,19 @@ wn.onkey(paddle_b_down, 'Down')
 ball.dx = 2
 ball.dy = 2
 
+# Initial score
+score_a = 0
+score_b = 0
+
+# Pen
+pen = turtle.Turtle()
+pen.speed(0)
+pen.color('white')
+pen.penup() # disable to draw a line
+pen.hideturtle()
+pen.goto(0, 260)
+pen.write('Player A: {} Player B: {}'.format(score_a, score_b), align='center', font=('Courier', 24, 'normal'))
+
 # Main game loop
 while True:
     wn.update()
@@ -103,11 +116,17 @@ while True:
     if ball.xcor() <= -390: 
         ball.goto(0, 0)
         ball.dx *= -1
+        score_b +=1
+        pen.clear()
+        pen.write('Player A: {} Player B: {}'.format(score_a, score_b), align='center', font=('Courier', 24, 'normal'))
     
     # Right border
     if ball.xcor() >= 390:
         ball.goto(0, 0)
         ball.dx *= -1
+        score_a += 1
+        pen.clear()
+        pen.write('Player A: {} Player B: {}'.format(score_a, score_b), align='center', font=('Courier', 24, 'normal'))
 
     # Paddle and ball collisions
     # Left paddle
